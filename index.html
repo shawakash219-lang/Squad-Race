@@ -1,0 +1,34 @@
+<script type="module">
+  // Firebase functions import karna
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+  // Jo config aapne copy kiya tha, use yahan paste karein
+  const firebaseConfig = {
+    
+ apiKey: "AIzaSyBhapKb5kZpbQTnT7GQHLBtZ6XssKeumU8",
+  authDomain: "squad-race.firebaseapp.com",
+  projectId: "squad-race",
+  storageBucket: "squad-race.firebasestorage.app",
+  messagingSenderId: "977000296350",
+  appId: "1:977000296350:web:265497ff06190fd622308f"
+};
+  // Firebase Initialize
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // Example: Player ki position update karna
+  function updatePlayerPos(playerId, x, y) {
+    set(ref(db, 'players/' + playerId), {
+      x: x,
+      y: y
+    });
+  }
+
+  // Example: Baaki players ka data real-time mein lena
+  onValue(ref(db, 'players/'), (snapshot) => {
+    const data = snapshot.val();
+    console.log("All players movement:", data);
+    // Yahan hum canvas par doosri cars draw karenge
+  });
+</script>
